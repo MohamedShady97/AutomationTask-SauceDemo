@@ -2,17 +2,10 @@ package com.saucedemo.testcases;
 
 import com.saucedemo.base.BaseTest;
 
-import com.saucedemo.factory.DriverFactory;
-import com.saucedemo.pages.LoginPage;
-import com.saucedemo.pages.ProductsPage;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import com.saucedemo.pages.P01_LoginPage;
+import com.saucedemo.utils.ConfigUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 public class LoginTest extends BaseTest {
 
@@ -20,11 +13,11 @@ public class LoginTest extends BaseTest {
     @Test(description = "test the functionality of login")
     public void ShouldBeAbleToLoginWithUsernameAndPassword(){
 
-        LoginPage loginPage = new LoginPage(driver);
+        P01_LoginPage p01LoginPage = new P01_LoginPage(driver);
 
-        Boolean isLogoIsDisplayed= loginPage
+        Boolean isLogoIsDisplayed= p01LoginPage
                                     .load()
-                                    .login("standard_user","secret_sauce")
+                                    .login(ConfigUtils.getInstance().getUserName(),ConfigUtils.getInstance().getPassword())
                                     .isAppLogoIsDisplayed();
 
         Assert.assertTrue(isLogoIsDisplayed);

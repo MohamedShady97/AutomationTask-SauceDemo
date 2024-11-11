@@ -2,6 +2,7 @@ package com.saucedemo.testcases;
 
 import com.saucedemo.base.BaseTest;
 import com.saucedemo.pages.*;
+import com.saucedemo.utils.ConfigUtils;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,25 +14,24 @@ public class AddToCartTest extends BaseTest {
 @Test
     public void ShouldBeAbleToAddToCart() {
 
-    LoginPage loginPage = new LoginPage(driver);
+    P01_LoginPage p01LoginPage = new P01_LoginPage(driver);
 
-    String numberOfProducts =
-            loginPage.load()
-                    .login("standard_user", "secret_sauce")
-                    .clickOnAddToCart()
-                    .clickOnOnesieProduct()
-                    .clickOnAddToCartButton()
-                    .getNumberOfcartList();
+    String numberOfProducts = p01LoginPage.load()
+                            .login(ConfigUtils.getInstance().getUserName(),ConfigUtils.getInstance().getPassword())
+                            .clickOnAddToCart()
+                            .clickOnOnesieProduct()
+                            .clickOnAddToCartButton()
+                            .getNumberOfcartList();
     assert (numberOfProducts.equals("2"));
 
-    CartListPage cartListPage= new CartListPage(driver);
-    List<WebElement> products=cartListPage
+    P04_CartList p04CartList = new P04_CartList(driver);
+    List<WebElement> products= p04CartList
                             .load()
                             .getCartList();
 
     for(WebElement product : products){
-        String productName = cartListPage.getTextOfProductName();
-        String productPrice = cartListPage.getTextOfProductPrice();
+        String productName = p04CartList.getTextOfProductName();
+        String productPrice = p04CartList.getTextOfProductPrice();
         if (productName.equals("Sauce Labs Fleece Jacket"))
         {
             assert(productPrice.equals("$49.99"));
@@ -41,17 +41,16 @@ public class AddToCartTest extends BaseTest {
         }
         else System.out.println("No products");
     }
-    CheckOutStepTwoPage checkOutStepTwoPage =
-                                     cartListPage
-                                    .clickOnCheckoutButton()
-                                    .enterUserData("mohamed","shady","87943")
-                                    .clickOnContinueButton();
-    Assert.assertTrue(checkOutStepTwoPage.isPageTitleDisplayed());
-    Assert.assertTrue(checkOutStepTwoPage.isSummaryInfoDisplayed());
-    Assert.assertTrue(checkOutStepTwoPage.isSummaryTotalDisplayed());
+    P06_CheckOutStepTwo p06CheckOutStepTwo = p04CartList
+                            .clickOnCheckoutButton()
+                            .enterUserData(ConfigUtils.getInstance().getFirstName(), ConfigUtils.getInstance().getLastName(), ConfigUtils.getInstance().getPostalCode())
+                            .clickOnContinueButton();
+    Assert.assertTrue(p06CheckOutStepTwo.isPageTitleDisplayed());
+    Assert.assertTrue(p06CheckOutStepTwo.isSummaryInfoDisplayed());
+    Assert.assertTrue(p06CheckOutStepTwo.isSummaryTotalDisplayed());
 
-    CheckOutCompletePage checkOutCompletePage= new CheckOutCompletePage(driver);
-    String titleOfCompletePage= checkOutStepTwoPage
+    P07_CheckOutComplete p07CheckOutCompletePage = new P07_CheckOutComplete(driver);
+    String titleOfCompletePage= p06CheckOutStepTwo
                                 .clickOnFinishButton()
                                 .getTextOfPageHeader();
     Assert.assertEquals(titleOfCompletePage,"Thank you for your order!");

@@ -2,6 +2,7 @@ package com.saucedemo.testcases;
 
 
 import com.github.javafaker.Faker;
+import com.saucedemo.utils.ConfigUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,9 +25,9 @@ public class EndToEndTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         // Login using the standard user credentials on the login screen
-        driver.get("https://www.saucedemo.com/");
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        driver.get(ConfigUtils.getInstance().getbaseUrl());
+        driver.findElement(By.id("user-name")).sendKeys(ConfigUtils.getInstance().getUserName());
+        driver.findElement(By.id("password")).sendKeys(ConfigUtils.getInstance().getPassword());
         driver.findElement(By.id("login-button")).click();
 
         // Add sauce-labs-fleece-jacket to the cart
@@ -62,9 +63,9 @@ public class EndToEndTest {
         driver.findElement(By.id("checkout")).click();
 
         // Entering user data
-        driver.findElement(By.id("first-name")).sendKeys("mohamed");
-        driver.findElement(By.id("last-name")).sendKeys("shady");
-        driver.findElement(By.id("postal-code")).sendKeys("76547");
+        driver.findElement(By.id("first-name")).sendKeys(ConfigUtils.getInstance().getFirstName());
+        driver.findElement(By.id("last-name")).sendKeys(ConfigUtils.getInstance().getLastName());
+        driver.findElement(By.id("postal-code")).sendKeys(ConfigUtils.getInstance().getPostalCode());
         driver.findElement(By.id("continue")).click();
 
         // Assert the order details on the overview page

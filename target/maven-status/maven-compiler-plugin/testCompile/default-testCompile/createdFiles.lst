@@ -1,0 +1,13 @@
+com\saucedemo\pages\CartListPage.class
+com\saucedemo\pages\LoginPage.class
+com\saucedemo\pages\OnesieProductPage.class
+com\saucedemo\base\BasePage.class
+com\saucedemo\testcases\EndToEndTest.class
+com\saucedemo\testcases\LoginTest.class
+com\saucedemo\base\BaseTest.class
+com\saucedemo\testcases\AddToCartTest.class
+com\saucedemo\pages\CheckOutStepOnePage.class
+com\saucedemo\pages\CheckOutCompletePage.class
+com\saucedemo\pages\ProductsPage.class
+com\saucedemo\pages\CheckOutStepTwoPage.class
+com\saucedemo\factory\DriverFactory.class
